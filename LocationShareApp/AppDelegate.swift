@@ -14,15 +14,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
         locationManager.requestAlwaysAuthorization()
-        
-        InstanceID.instanceID().instanceID { (result, error) in
-            if error == nil, result != nil {
-                self.token = result!.token
-                Firestore.firestore().collection("users").document(Auth.auth().currentUser!.uid).setData(
-                    ["fcmToken": result!.token],
-                    merge: true)
-            }
-        }
         locationManager.delegate = self
         locationManager.startMonitoringSignificantLocationChanges()
         return true
